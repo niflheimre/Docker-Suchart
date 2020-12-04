@@ -1,0 +1,96 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'homepage/style.css' %}">
+<!-- <style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style> -->
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color: #f2f2f2;">
+
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Suchart</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcoll"
+            aria-controls="navcoll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navcoll">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#chatbot">Meet with our chatbot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#raise">raise a new case</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                <a class="nav-link" href="/admin">sign in</a>
+            </span>
+        </div>
+    </nav>
+
+    <!-- first container -->
+    <div>
+        <div class="jumbotron" id="aboutme" style="height:auto;
+            background-image:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ),url(../../static/src/duck\ pattern-01.jpg);
+            background-size: cover;
+            color: white;">
+                <div style="padding: 25% 5%;">
+                    <h1 class="display-2">Suchart de Bot</h1>
+                    <p class="lead">The Chatbot that help you inspect online fraud.</p>
+                    <hr class="my-4" style="border-color:white; border-style:solid;width: 50%;margin-left: 0%;">
+                    <p>with machine learning implemented.</p>
+                </div>
+        </div>
+    </div>
+
+    <!-- second container -->
+    <div id = "chatbot" class="container" style="height:100%;">
+        <div class="row" style="height: auto;">
+            <div class="col-sm" style="padding: 30% 0%; height:auto;">
+                <h1 class="display-3">Meet with Suchart</h1>
+                <hr class="mr-4">
+                <p class = "lead">You can ask him anything.</p>
+            </div>
+            <div class="col-sm" style="padding: 20% 5%;">
+                <iframe allow="microphone;" width="100%" height="100%" 
+                    src="https://console.dialogflow.com/api-client/demo/embedded/d24a6a49-59ee-469c-abf9-a80a6bb13f28">
+                </iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- third container -->
+    <div id="raise">
+        <div class="card card-image" style="background-image: url(../../static/src/31799.jpg);height:100%;">
+            <div class= "row h-100 justify-content-center align-items-center">
+                <div class="col-sm-12 my-auto">
+                    <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+                        <div class="py-5  ">
+                            <h2 class="card-title display-4 my-4 py-2">Help us prevent online fraud</h2>
+                            <p class="lead mb-4 pb-2 px-md-5 mx-md-5">get vicked? send the fraudster's information to us by follow the link
+                                below.</p>
+                            <a href="{% url 'raiseCase'%}" role="button" class="btn btn-outline-secondary btn-lg">Raise a new case</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
