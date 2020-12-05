@@ -1,104 +1,189 @@
 <!DOCTYPE html>
 <html>
-{% load static %}
+  {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'homepage/style.css' %}">
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'homepage/style.css' %}"
+  />
 
-<head>
-<meta charset="UTF-8">
-<title>Raise a new Case</title>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'src/logo.png' %}" type="image/x-icon" />
+    <title>Raise a new Case</title>
+
     <script type="text/javascript"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-</head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<body style="background-color: #f2f2f2;">
+  <body style="background-color: #f2f2f2">
     <!-- nav bar -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" style="position: relative;">
-        <a class="navbar-brand" href="/">Suchart</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcoll"
-            aria-controls="navcoll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav
+      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+      style="position: relative"
+    >
+      <a class="navbar-brand" href="/">Suchart</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navcoll"
+        aria-controls="navcoll"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </nav>
 
     <!-- Form -->
-    <div style="height:auto;">
-        <form method="POST" action="/new_case/" id="raise" style="padding:5% 25%;">
-            {% csrf_token %}
-            <h2 class="display-3">Raise a new case</h2>
-            <br>
-            <div style="padding-top: 20px;">
-                <div class="form-group required">
-                    <label for="fr_name" class="control-label">Fraud's Name</label>
-                    <input type="text" class="form-control" id="fr_name" placeholder="First name - Last name" name="name" required>
-                    <small id="emailHelp" class="form-text text-muted"></small>
-                </div>
-                <div class="form-group">
-                    <label for="nat_id">National ID</label>
-                    <input type="text" class="form-control" id="nat_id" name="nat_id" maxlength="13" minlength="13">
-                </div>
-                <div class = "form-row">
-                    <div class="form-group col-md-7 required">
-                        <label for="goods" class="control-label">Goods</label>
-                        <input type="text" class="form-control" id="goods" name = "goods" required>
-                    </div>
-                    <div class="form-group col-md required">
-                        <label for="price" class="control-label">Price</label>
-                        <div class="input-group">
-                            <input type="number" step="0.01" min=0 class="form-control" id="price" name="price" placeholder="xxx.xx"
-                                aria-describedby="baht" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="baht">฿</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="acc">Bank account</label>
-                        <input type="text" class="form-control" id="acc" name="b_acc"  placeholder="acc no.">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="b_name">Bank name</label>
-                        <input type="text" class="form-control" id="b_name" name="b_name">
-                    </div>
-                </div>
-                <div class="form-row">  
-                    <div class="form-group col-md-4">
-                        <label for="tran_date">Transaction date</label>
-                        <input type="datetime-local" class="form-control" id="tran_date" name="trans_date">
-                    </div>
-                    <div class="form-group col-md">
-                        <label for="province">Province</label>
-                        <input type="text" class="form-control" id="province" name="province">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="site">Website</label>
-                    <input type="url" class="form-control" id="site" name="website">
-                </div>
-                <div class="form-group">
-                    <label for="detail">Details</label>
-                    <input type="text" style="height: 60px;"class="form-control" id="detail" name="detail">
-                </div>
-
-    
-                <button type="submit" class="btn btn-primary btn-block" value="OK">Submit</button>
+    <div style="height: auto">
+      <form
+        method="POST"
+        action="/new_case/"
+        id="raise"
+        style="padding: 5% 25%"
+      >
+        {% csrf_token %}
+        <h2 class="display-3">Raise a new case</h2>
+        <br />
+        <div style="padding-top: 20px">
+          <div class="form-group required">
+            <label for="fr_name" class="control-label">Fraud's Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="fr_name"
+              placeholder="First name - Last name"
+              name="name"
+              required
+            />
+            <small id="emailHelp" class="form-text text-muted"></small>
+          </div>
+          <div class="form-group">
+            <label for="nat_id">National ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nat_id"
+              name="nat_id"
+              maxlength="13"
+              minlength="13"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-7 required">
+              <label for="goods" class="control-label">Goods</label>
+              <input
+                type="text"
+                class="form-control"
+                id="goods"
+                name="goods"
+                required
+              />
             </div>
-        </form>
-    
-    </div>
+            <div class="form-group col-md required">
+              <label for="price" class="control-label">Price</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  class="form-control"
+                  id="price"
+                  name="price"
+                  placeholder="xxx.xx"
+                  aria-describedby="baht"
+                  required
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text" id="baht">฿</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="acc">Bank account</label>
+              <input
+                type="text"
+                class="form-control"
+                id="acc"
+                name="b_acc"
+                placeholder="acc no."
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="b_name">Bank name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="b_name"
+                name="b_name"
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="tran_date">Transaction date</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="tran_date"
+                name="trans_date"
+              />
+            </div>
+            <div class="form-group col-md">
+              <label for="province">Province</label>
+              <input
+                type="text"
+                class="form-control"
+                id="province"
+                name="province"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="site">Website</label>
+            <input type="url" class="form-control" id="site" name="website" />
+          </div>
+          <div class="form-group">
+            <label for="detail">Details</label>
+            <input
+              type="text"
+              style="height: 60px"
+              class="form-control"
+              id="detail"
+              name="detail"
+            />
+          </div>
 
-</body>
+          <button type="submit" class="btn btn-primary btn-block" value="OK">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
