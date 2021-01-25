@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 class case(models.Model):
-    report_id = models.IntegerField(primary_key=True, auto_created=True, unique=True)
     name = models.CharField(max_length=60)
     nat_id = models.CharField(max_length=14, null=True, blank=True)
     goods = models.CharField(max_length=40)

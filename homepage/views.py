@@ -11,6 +11,7 @@ def raiseCase(request):
 
     if request.method == 'GET':
         return render(request, 'homepage/raiseCase.html')
+    
     if request.method == 'POST':
         data = request.POST
         
