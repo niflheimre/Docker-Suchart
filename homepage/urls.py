@@ -6,4 +6,5 @@ from django.conf.urls import include, url
 urlpatterns = [
     path('', views.index, name='index'),
     path('new_case/', views.raiseCase, name='raiseCase'),
+    path('twitter_search/', views.twitterSearch, name='twitterSearch'),
 ]

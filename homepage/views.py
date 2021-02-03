@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
 from .models import case
 # Create your views here.
 
@@ -34,3 +36,15 @@ def raiseCase(request):
         )
         return render(request, 'homepage/case_added.html')
 
+def twitterSearch(request):
+
+    if request.method == 'GET':
+        return render(request, 'homepage/twitter_search.html')
+
+    if request.method == 'POST':
+        data = request.POST
+        template = loader.get_template('homepage/twitter_search.html')
+        context = {
+            'keyword': data['keyword'],
+        }
+        return HttpResponse(template.render(context, request))
