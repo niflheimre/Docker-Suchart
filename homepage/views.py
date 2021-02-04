@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import case
+import snscrape.modules.twitter as sntwitter
+import copy
 # Create your views here.
 
 def index(request):
@@ -43,8 +45,23 @@ def twitterSearch(request):
 
     if request.method == 'POST':
         data = request.POST
-        template = loader.get_template('homepage/twitter_search.html')
-        context = {
-            'keyword': data['keyword'],
+        model = {
+            "user":"",
+            "text":""
         }
-        return HttpResponse(template.render(context, request))
+        resultlist = {"result" : []}
+
+        for i,tweet in enumerate(sntwitter.TwitterSearchScraper(data['keyword'] + 'since:2015-12-17 until:2020-09-25').get_items()) :
+            if i > int(data['maxtweets']) :
+                break
+
+            jstweet = copy.deepcopy(model)
+            jstweet['user'] = tweet.username
+            jstweet['text'] = tweet.content
+            resultlist['result'].append(jstweet)
+
+        template = loader.get_template('homepage/twitter_search.html')
+        '''context = {
+            'text': resultlist,
+        }'''
+        return HttpResponse(template.render(resultlist, request))
