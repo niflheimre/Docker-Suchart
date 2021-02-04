@@ -10,6 +10,9 @@
   <title>Suchart de Bot</title>
   <link rel="shortcut icon" href="{% static 'src/logo150.png' %}" type="image/x-icon" />
 
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400&display=swap" rel="stylesheet">
+  
   <link
     rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -21,11 +24,15 @@
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"
   ></script>
+      
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"
   ></script>
+  
   <script
     src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
@@ -54,7 +61,10 @@
           <a class="nav-link" href="#chatbot">Meet with our chatbot</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#raise">raise a new case</a>
+          <a class="nav-link" href="#search">Information Checking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#raise">Send report</a>
         </li>
       </ul>
       <span class="navbar-text">
@@ -67,7 +77,7 @@
   <div>
     <div class="jumbotron-fluid vh-100" id="aboutme" style="
               background-image:linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ),url(../../static/src/duck\ pattern-01.jpg);
-              background-size: cover;
+              background-size: contain;
               color: white;">
       <div class="row-10">
       </div>
@@ -91,7 +101,7 @@
           <p class="lead">You can ask him anything.</p>
         </div>
       </div>
-      <div class="col-lg align-self-center p-5">
+      <div class="col-lg align-self-center p-5" style="font-family:'Kanit', sans-serif;">
         <div class="row align-items-center">
           <div class="col">
             <h1 class="display-4">คุณสามารถ</h1>
@@ -117,21 +127,41 @@
           </div>
         </div>
       </div>
+      
     </div>
   </div>
   
   <!-- third container -->
-  <div id="raise">
-    <div class="card-lg card-fluid" style="background-image: url(../../static/src/31799.png);">
+  <div id="search">
+    <div class="card-lg card-fluid" style="background-color: rgb(34, 82, 112);">
       <div class="row min-vh-100 justify-content-center align-items-center">
         <div class="col-lg-12 my-auto">
           <div class="text-white text-center rgba-stylish-strong py-5 px-4">
-            <div class="py-5  ">
-              <h2 class="card-title display-4 my-4 py-2">Help us prevent online fraud</h2>
-              <p class="lead mb-4 pb-2 px-md-5 mx-md-5">get vicked? send the fraudster's information to us by follow the
-                link
-                below.</p>
-              <a href="{% url 'raiseCase'%}" role="button" class="btn btn-outline-secondary btn-lg">Raise a new case</a>
+            <div class="py-5">
+              <h2 class="card-title display-4 my-4 py-2">Check the Trader</h2>
+              <p class="lead mb-4 pb-2 px-md-5 mx-md-5" style="font-family:'Kanit', sans-serif;">ตรวจสอบร้านค้าหรือผู้ขายกับฐานข้อมูลของเรา โดยกรอกรายละเอียดของร้านค้าที่นี่</p>
+              
+              <form id="SearchForm">
+                <div class="form-row py-2 row-cols-1 row-cols-sm-2 row-col-md-3 justify-content-center align-items-center">
+                  <div class="form-group col col-md-3 align-self-center my-2">
+                    <input type="text" class="form-control bg-transparent text-light" id="inputContent" required>
+                  </div>
+                  <div class="form-group col col-md-auto align-self-center my-2">
+                    <select class="custom-select bg-dark text-white-50" id="inputType" style="font-family:'Kanit', sans-serif;" required>
+                      <option selected disabled value="">ประเภทข้อมูล</option>
+                      <option value="name">ชื่อ-นามสกุล</option>
+                      <option value="bank_num">เลขบัญชี</option>
+                      <option value="nat_id">เลขบัตรประชาชน</option>
+                    </select>
+                  </div>
+                  <div class="col col-md-auto">
+                      <button class="btn btn-dark btn-lg" style="padding-top: 5px;padding-bottom: 5px;" type="submit">Submit</button>
+                  </div>
+                </div>
+              </form>
+
+              <p class="lead" id="ResponseTrue" style="font-family:'Kanit', sans-serif;color: rgb(255, 83, 83);display:none;">พบในฐานข้อมูล ผู้ขายมีประวัติโกง</p>
+              <p class="lead" id="ResponseFalse" style="font-family:'Kanit', sans-serif;color: rgb(174, 255, 121);display:none;">ไม่พบในฐานข้อมูล กรุณาใช้งาน Chatbot ของเราเพื่อความมั่นใจ</p>
             </div>
           </div>
         </div>
@@ -139,6 +169,23 @@
     </div>
   </div>
 
+  <!-- forth container -->
+  <div id="raise">
+    <div class="card-lg card-fluid" style="background-image: url(../../static/src/31799.png);">
+      <div class="row min-vh-100 justify-content-center align-items-center">
+        <div class="col-lg-12 my-auto">
+          <div class="text-white text-center rgba-stylish-strong py-5 px-4">
+            <div class="py-5">
+              <h2 class="card-title display-4 my-4 py-2">Help us prevent online fraud</h2>
+              <p class="lead mb-4 pb-2 px-md-5 mx-md-5" style="font-family: 'Kanit',sans-serif;">คุณถูกโกงมาหรือไม่? ส่งข้อมูลให้กับเรา เพื่อช่วยให้คนอื่นๆไม่ถูกโกงแบบคุณอีก</p>
+              <a href="{% url 'raiseCase'%}" role="button" class="btn btn-outline-light btn-lg">Send report</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
   <!-- Load Facebook SDK for JavaScript -->
   <div id="fb-root">
     <div
@@ -166,6 +213,37 @@
       js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
+  </script>
+
+  <script type="text/javascript">
+    
+    $(function () {
+        $("#SearchForm").submit(function (event) {
+          // Stop form from submitting normally
+          event.preventDefault();
+          var req = $.get('/api/query?type='+$("#inputType").val()+"&content="+$("#inputContent").val());
+          // if success:
+          req.done(function (data) {
+            
+            // console.log("success data =>"+data);
+            
+            if(data.value == true){
+              $("#ResponseTrue").css({"display": "contents"});
+              $("#ResponseFalse").css({"display": "none"});
+            }else{
+              $("#ResponseTrue").css({"display": "none"});
+              $("#ResponseFalse").css({"display": "contents"});
+            }
+          });
+          // if failure:
+          req.fail(function (data) {
+
+            console.err("Response error: " + data);
+            // 4xx or 5xx response, alert user about failure
+          });
+        });
+      });
+
   </script>
 
   <!-- Your Chat Plugin code -->
