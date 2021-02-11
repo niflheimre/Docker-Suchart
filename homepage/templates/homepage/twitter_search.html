@@ -77,14 +77,22 @@
           <h2 class="display-3">Twitter search</h2>
           <br />
           <div class="form-row">
-            <div class="form-group col-md required">
+            <div class="form-group col-md">
               <label for="keyword" class="control-label">Keyword</label>
               <input
                 type="text"
                 class="form-control"
                 id="keyword"
                 name="keyword"
-                required
+              />
+            </div>
+            <div class="form-group col-md">
+              <label for="username" class="control-label">User name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
               />
             </div>
             <div class="form-group col-md-2 required">
@@ -100,34 +108,49 @@
                 />
             </div>
             <div class="form-group" style="padding-top: 30px; padding-left: 10px;">
-              <button type="submit" class="btn btn-primary btn-block col-md" value="OK">
+              <button type="submit" class="btn btn-primary btn-block col-md" name="searchBtn" value="OK">
               Submit
               </button>
             </div>
           </div>
         </form>
-        <div class="container">
-          <div class="table-responsive tableFixHead">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">User name</th>
-                  <th scope="col">Tweet</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% if result %}
-                  {% for ele in result %}
+        <form
+        method="POST"
+        action="/twitter_search/"
+        id="twitterSearch"
+        style="padding: 0% 10%"
+        >
+        {% csrf_token %}
+          <div class="container">
+            <div class="table-responsive tableFixHead">
+              <table class="table table-hover">
+                <thead>
                   <tr>
-                    <td>{{ ele.user }}</td>
-                    <td>{{ ele.text }}</td>
+                    <th scope="col">User name</th>
+                    <th scope="col">Tweet</th>
+                    <th scope="col"> </th>
                   </tr>
-                  {% endfor %}
-                {% endif %}
-              </tbody>
-            </table>           
+                </thead>
+                <tbody>
+                  {% if result %}
+                    <input type="hidden" id="oldresult" name="oldresult" value='{{ result }}' />
+                    {% for ele in result %}
+                    <tr>
+                      <td><input type="hidden" id="coluser" name="coluser" value='{{ ele.user }}' />{{ ele.user }}</td>
+                      <td><input type="hidden" id="coltext" name="coltext" value='{{ ele.text }}' />{{ ele.text }}</td>
+                      <td><input type="checkbox" id= "check" name= "colindex" value= '{{ ele.index }}' /></td>
+                    </tr>
+                    {% endfor %}
+                  {% endif %}
+                </tbody>
+              </table>  
+            </div>
           </div>
-        </div>
+          <div style="padding-top: 1%; padding-left: 75%;">
+            <input type="submit" class="btn btn-success" name="saveBtn" value="Save Selected">
+            <input type="submit" class="btn btn-success" name="saveAll" value="Save All">
+          </div>
+        </form>
     </div>
   </body>
 </html>
