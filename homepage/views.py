@@ -19,22 +19,23 @@ def raiseCase(request):
         return render(request, 'homepage/raiseCase.html')
     
     if request.method == 'POST':
+        
         data = request.POST
         
         date = data['trans_date']
-
+        
         if data['trans_date'] == '':
             date = None
 
         case.objects.create(
-            bank_name = data['b_name'],
+            bank_name = data['b_name'] if 'b_name' in data else None,
             bank_num = data['b_acc'],
             details = data['detail'],
             goods = data['goods'],
             nat_id = data['nat_id'],
             name = data['name'],
             price = data['price'],
-            province = data['province'],
+            province=data['province'] if 'povince' in data else None,
             trans_date = date,
             website=data['website']
         )

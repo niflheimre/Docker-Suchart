@@ -16,7 +16,7 @@ class case(models.Model):
     report_date = models.DateTimeField(auto_now_add=True)
     website = models.URLField('Merchant Website', null=True,blank=True)
     details = models.TextField(max_length=200, null=True, blank=True)
-    status = models.CharField(max_length=1,choices=stat_choice,default=stat_choice[0])
+    status = models.CharField(max_length=1,choices=stat_choice,default='0')
 
     # def __str__(self):
     #     return self.serializable_value
