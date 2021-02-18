@@ -6,6 +6,7 @@ from django.http.response import JsonResponse
 # Create your views here.
 
 def index(request):
+    count = 0
     print(request.GET)
     if request.method == 'GET':
         return render(request, 'homepage/index.html')
@@ -57,7 +58,7 @@ def caseExist(request):
             obj = case.objects.filter(nat_id=content)
         
         if (len(obj)!=0):
-            return JsonResponse({"value": True}, status=status.HTTP_200_OK)
+            return JsonResponse({"value": True,"count":len(obj)}, status=status.HTTP_200_OK)
         else:
             return JsonResponse({"value": False},status=status.HTTP_200_OK)
             
