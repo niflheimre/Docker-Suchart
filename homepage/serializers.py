@@ -16,6 +16,5 @@ class CaseSerializer(serializers.ModelSerializer):
                   'trans_date',
                   'report_date',
                   'website',
-                  'details',
-                  'status')
+                  'details')
         
