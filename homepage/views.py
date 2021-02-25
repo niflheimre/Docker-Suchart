@@ -63,3 +63,5 @@ def caseExist(request):
             return JsonResponse({"value": False},status=status.HTTP_200_OK)
             
 
+def MLmodel(request):
+    return JsonResponse({"status": "This api is in maintenance"},status=status.HTTP_200_OK)

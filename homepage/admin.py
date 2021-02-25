@@ -1,23 +1,55 @@
 from django.contrib import admin
+from django.contrib.admin.models import LogEntry, CHANGE
+from django.contrib.contenttypes.models import ContentType
 
 # Register your models here.
 from .models import case
 
 
-def approve(modeladmin, request, queryset):
+def verify(modeladmin, request, queryset):
     queryset.update(status='1')
-approve.short_description = 'Mark selected case as approved'
+    ct = ContentType.objects.get_for_model(queryset.model)
+    for obj in queryset:
+        LogEntry.objects.log_action(
+            user_id = request.user.id,
+            content_type_id = ct.pk,
+            object_id = obj.pk,
+            object_repr = 'Verified :'+str(obj),
+            action_flag = CHANGE,
+            change_message = 'Mark as Verified')
+verify.short_description = 'Mark selected case as Verified'
 
 def reject(modeladmin, request, queryset):
     queryset.update(status='0')
-reject.short_description = 'Mark selected case as not approved'
+    ct = ContentType.objects.get_for_model(queryset.model)
+    for obj in queryset:
+        LogEntry.objects.log_action(
+            user_id = request.user.id,
+            content_type_id = ct.pk,
+            object_id = obj.pk,
+            object_repr = 'Unverified :'+str(obj),
+            action_flag = CHANGE,
+            change_message = 'Mark as not Unverified')
+reject.short_description = 'Mark selected case as Unverified'
 
 class caseAdmin(admin.ModelAdmin):
-    list_display = [f.name for f in case._meta.get_fields()]
+    
+    def isVerified(self,instance):
+        return instance.status == '1'
+
+    isVerified.boolean = True
+    isVerified.short_description = 'Verified'
+    isVerified.admin_order_field = 'status'
+
+    list_display = ['isVerified','id','name','goods','price','nat_id','bank_num']
+    list_display_links = ('name',)
+
     search_fields = ("name", "goods", "bank_num", "nat_id","website")
     list_filter = ('report_date','status')
-    actions = [approve,reject]
+    actions = [verify,reject]
+    ordering = ['status']
 
 admin.site.register(case,caseAdmin)
-
+admin.site.site_title = 'Suchart'
+admin.site.site_header = 'Suchart Administration'
 
