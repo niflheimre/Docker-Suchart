@@ -6,3 +6,9 @@ html {
   content:" *";
   color:red;
 }
+
+.loading {
+    height: 30px;
+    width: 30px;
+    display: none;
+}

@@ -1,7 +1,11 @@
 from django.db import models
 
-# Create your models here.
+stat_choice = [
+    ('0', 'Unverified'),
+    ('1', 'Verified')
+]
 class case(models.Model):
+    status = models.CharField(max_length=1,choices=stat_choice,default='0')
     name = models.CharField(max_length=60)
     nat_id = models.CharField(max_length=14, null=True, blank=True)
     goods = models.CharField(max_length=40)
@@ -12,8 +16,8 @@ class case(models.Model):
     trans_date = models.DateTimeField('Transaction date', null=True, blank=True)
     report_date = models.DateTimeField(auto_now_add=True)
     website = models.URLField('Merchant Website', null=True,blank=True)
-    details = models.TextField(max_length=200, null=True,blank=True)
+    details = models.TextField(max_length=200, null=True, blank=True)
 
-    # def __str__(self):
-    #     return self.serializable_value
+    def __str__(self):
+        return str(self.id)+': '+self.name
     

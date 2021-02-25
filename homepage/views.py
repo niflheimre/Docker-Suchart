@@ -1,11 +1,17 @@
 from django.shortcuts import render
 from .models import case
+from rest_framework import status
+from django.http.response import JsonResponse
+
 # Create your views here.
 
 def index(request):
+    count = 0
     print(request.GET)
-    return render(request, 'homepage/index.html')
-
+    if request.method == 'GET':
+        return render(request, 'homepage/index.html')
+    if request.method == 'POST':
+        return render(request, 'homepage/index.html')
 
 def raiseCase(request):
 
@@ -34,3 +40,28 @@ def raiseCase(request):
         )
         return render(request, 'homepage/case_added.html')
 
+# api/query?type=<str>&content=<str>
+def caseExist(request):
+
+    if request.method == 'GET':
+        
+        typ = request.GET.get('type')
+        content = request.GET.get('content')
+        
+        obj = None
+
+        if(typ == 'name'):
+            obj = case.objects.filter(name__contains=str(content))
+        if(typ == 'bank_num'):
+            obj = case.objects.filter(bank_num=content)
+        if(typ == 'nat_id'):
+            obj = case.objects.filter(nat_id=content)
+        
+        if (len(obj)!=0):
+            return JsonResponse({"value": True,"count":len(obj)}, status=status.HTTP_200_OK)
+        else:
+            return JsonResponse({"value": False},status=status.HTTP_200_OK)
+            
+
+def MLmodel(request):
+    return JsonResponse({"status": "This api is in maintenance"},status=status.HTTP_200_OK)
