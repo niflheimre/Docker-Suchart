@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'homepage.apps.HomepageConfig',
+    'admin_shortcuts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -113,6 +114,65 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# Admin shortcut
+ADMIN_SHORTCUTS = [
+     {
+        'shortcuts': [
+            {
+                'title':'Suchart Homepage',
+                'url': '/',
+                'open_new_window': True
+            },
+            {
+                'title': 'Twitter Search',
+                'url': '/twitter_search/',
+                'open_new_window': True,
+                'icon' : 'fas fa-hashtag'
+            },
+            {
+                'title':'Logout',
+                'url_name': 'admin:logout'
+            },
+            {
+                'title': 'Users',
+                'url_name': 'admin:auth_user_changelist',
+            },
+            {
+                'title': 'Groups',
+                'url_name': 'admin:auth_group_changelist'
+            },
+            {
+                'title': 'Add user',
+                'url_name': 'admin:auth_user_add',
+                'has_perms': 'example.utils.has_perms_to_users',
+            },
+        ]
+    },
+    {
+        'title': 'Database',
+        'shortcuts': [
+            {
+                'title':'All Cases',
+                'url_name': 'admin:homepage_case_changelist',
+                'open_new_window': True,
+                'icon':'fas fa-book'
+            },
+            {
+                'title': 'Add New Case',
+                'url_name': 'admin:homepage_case_add',
+                'has_perms': 'example.utils.has_perms_to_users',
+                'open_new_window': True,
+                'icon':'fas fa-plus'
+            },
+        ]
+    }
+]
+
+ADMIN_SHORTCUTS_SETTINGS = {
+    'show_on_all_pages': False,
+    'hide_app_list': False,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

@@ -1,12 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import case
 from rest_framework import status
+from rest_framework.response import Response
 from django.http.response import JsonResponse
 import snscrape.modules.twitter as sntwitter
 import copy
 import pandas as pd
+from .MLmaterial.MLmodel import Predict
+import torch
 
 # Create your views here.
 
@@ -65,18 +68,36 @@ def caseExist(request):
         if (len(obj)!=0):
             return JsonResponse({"value": True,"count":len(obj)}, status=status.HTTP_200_OK)
         else:
-            return JsonResponse({"value": False},status=status.HTTP_200_OK)
-            
+            return JsonResponse({"value": False}, status=status.HTTP_200_OK)
+    
+    return Response({"Error": "Forbidden Request"}, status=status.HTTP_403_FORBIDDEN)
 
+# api/model?text=<str>
 def MLmodel(request):
-    return JsonResponse({"status": "This api is in maintenance"},status=status.HTTP_200_OK)
+    # res = 'Under maintenance'
+    if request.method == 'GET':
+        print('request received.')
+
+        postxt = request.GET.get('text')
+
+        res = Predict(postxt,26)
+
+        return JsonResponse({"result": str(res)}, status=status.HTTP_200_OK)
+    
+    return JsonResponse({"Error": "Forbidden Request"}, status=status.HTTP_403_FORBIDDEN)
+
 
 def twitterSearch(request):
-
     if request.method == 'GET':
-        return render(request, 'homepage/twitter_search.html')
+        if request.user.is_authenticated:
+            html = '<html><body></br></br></br><h1>This page is under maintenance.</h1><h4 id="countdown">Closing in 5 second."</h4></body><script>var seconds = 5;function countdown() {seconds = seconds - 1;if (seconds < 0) {window.close();} else {document.getElementById("countdown").innerHTML = "Closing in "+ seconds.toString() +" second.";window.setTimeout("countdown()", 1000);} } countdown();</script></html>'
+            return HttpResponse(html)
+            # return render(request, 'homepage/twitter_search.html')    # snscrape not working on AWS server :(
+        else:
+            return redirect('index')
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
+
         data = request.POST
         resultlist = {"result" : []}
         model = {

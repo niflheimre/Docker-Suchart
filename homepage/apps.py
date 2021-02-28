@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class HomepageConfig(AppConfig):
     name = 'homepage'
-    verbose_name = "raised case"
+    verbose_name = "reported case"
