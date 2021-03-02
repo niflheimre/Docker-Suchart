@@ -20,6 +20,7 @@ def dialogflow(req):
 
         # Load the JSON to a Python list & dump it back out as formatted JSON
         reqjson = json.loads(reqjson)
+        '''
         if reqjson.get('originalDetectIntentRequest').get('payload').get('data') :
             senderID = reqjson.get('originalDetectIntentRequest').get('payload').get('data')\
                 .get('sender').get('id')
@@ -28,7 +29,7 @@ def dialogflow(req):
             url = "https://graph.facebook.com/v6.0/" + senderID + "?fields=first_name,last_name&access_token=" + fbtoken
             response = requests.get(url)
             #print(response.json())
-
+        '''
         intentName = reqjson.get('queryResult').get('intent').get('displayName')
         if intentName == "help":
             resjson = helpFunc.help(reqjson, reqjson.get('session'))

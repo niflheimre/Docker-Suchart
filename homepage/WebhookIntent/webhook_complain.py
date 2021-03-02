@@ -3,7 +3,7 @@
 class complainFunc():
     def complain(reqjson, sessionID):
         resjson = {}
-        resjson['fulfillmentMessages'] = [{'text': {'text': ["https://suchart-docker.herokuapp.com/new_case/?fbclid=IwAR2LV7kgh89ku55vFjhUd6P2_yqmqwB78XpXQ_p26hXon4AWECc_Erge16w"]}},
+        resjson['fulfillmentMessages'] = [{'text': {'text': ["https://web.suchart.info/new_case/"]}},
         {
             'card': {
                 'title': "แบบฟอร์มร้องเรียนร้านค้าออนไลน์",
@@ -11,12 +11,12 @@ class complainFunc():
                 'buttons': [
                     {
                         "text": "ไปที่แบบฟอร์ม",
-                        "postback": "https://suchart-docker.herokuapp.com/new_case/?fbclid=IwAR2LV7kgh89ku55vFjhUd6P2_yqmqwB78XpXQ_p26hXon4AWECc_Erge16w"
+                        "postback": "https://web.suchart.info/new_case/"
                     }
                     ]
             },
             'platform': "FACEBOOK"
         }]
-        resjson['fulfillmentText'] = "https://suchart-docker.herokuapp.com/new_case/?fbclid=IwAR2LV7kgh89ku55vFjhUd6P2_yqmqwB78XpXQ_p26hXon4AWECc_Erge16w"
+        resjson['fulfillmentText'] = "https://web.suchart.info/new_case/"
             
         return resjson

@@ -27,7 +27,7 @@ class checkFunc():
     def check_choice(reqjson, sessionID):
         resjson = {}
         if reqjson.get('queryResult').get('parameters').get('use_form'):
-            resjson['fulfillmentMessages'] = [{'text': {'text': ["http://suchart-docker.herokuapp.com/#search"]}},
+            resjson['fulfillmentMessages'] = [{'text': {'text': ["https://web.suchart.info/#search"]}},
             {
                 'card': {
                     'title': "แบบฟอร์มตรวจสอบร้านค้าออนไลน์",
@@ -35,13 +35,13 @@ class checkFunc():
                     'buttons': [
                         {
                         "text": "ไปที่แบบฟอร์ม",
-                        "postback": "http://suchart-docker.herokuapp.com/#search"
+                        "postback": "https://web.suchart.info/#search"
                         }
                     ]
                 },
                 'platform': "FACEBOOK"
             }]
-            resjson['fulfillmentText'] = "http://suchart-docker.herokuapp.com/#search"
+            resjson['fulfillmentText'] = "https://web.suchart.info/#search"
             resjson['outputContexts'] = [{
                 "name": sessionID + '/contexts/check',
                 "lifespanCount": 0,
