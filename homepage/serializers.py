@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from homepage.models import case
+from homepage.models import case,Tweet
 
 
 class CaseSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = case
         fields = ('name',
@@ -19,3 +18,9 @@ class CaseSerializer(serializers.ModelSerializer):
                   'details',
                   'status')
         
+class TweetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tweet
+        fields = ('user',
+                  'post',
+                  'status')

@@ -1,0 +1,8 @@
+/.vscode/*
+/__pycache__/*
+
+/homepage/__pycache__/*
+
+cloud_sql_proxy_x64.exe
+
+/homepage/MLmaterial/weightedModel

@@ -1,0 +1,31 @@
+  
+# [START django_app]
+runtime: python38
+
+entrypoint: python manage.py runserver 0.0.0.0:$PORT
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: "Suchart.settings"
+  PORT: '8000'
+  DATABASE_NAME: 'defd155lvhf53s'
+  DATABASE_USER: 'mgtkofkoxjppno'
+  DATABASE_PASSWORD: '3540bccf49e0027fba0fbc0f9c2aad7700cb539bd7d79f3c3957be27fb5e7d4a'
+  DATABASE_PORT: '5432'
+  DATABASE_HOST: 'ec2-34-233-186-251.compute-1.amazonaws.com'
+
+beta_settings:
+# from command >> gcloud sql instances describe DATABASE-NAME <<
+  cloud_sql_instances: suchart-306315:asia-southeast1:gcp-posgres 
+
+handlers:
+# This configures Google App Engine to serve the files in the app's static
+# directory.
+- url: /static
+  static_dir: homepage/static/
+
+# This handler routes all requests not caught above to your main app. It is
+# required when static routes are defined, but can be omitted (along with
+# the entire handlers section) when there are no static files defined.
+- url: /.*
+  script: auto
+# [END django_app]

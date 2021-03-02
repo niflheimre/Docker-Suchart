@@ -5,10 +5,12 @@ from simpletransformers.classification import ClassificationModel
 from transformers import BertForSequenceClassification
 import torch
 import numpy as np
-
+import gc
 
 def Predict(text,treshold):
     
+    gc.collect()
+
     userinput = []
 
     model_args = {
@@ -16,13 +18,11 @@ def Predict(text,treshold):
         'no_save':True
     }
 
-    
-
     try:
+
         model = ClassificationModel(
             "bert", './homepage/MLmaterial/weightedModel', use_cuda=False,args=model_args
         )
-
         # model = BertForSequenceClassification.from_pretrained('./homepage/MLmaterial/weightedModel')
 
         print('model created.')
@@ -32,15 +32,25 @@ def Predict(text,treshold):
 
     cusset = set(thai_words())
 
-    for a in open('./homepage/MLmaterial/testread.txt', 'r', encoding='utf8').read().splitlines():
-        cusset.add(a)
+    with open('./homepage/MLmaterial/testread.txt', 'r', encoding='utf8') as f:
+        for a in f.read().splitlines():
+            cusset.add(a)
+
 
     input = ' '.join(word_tokenize(text, engine='newmm', custom_dict=dict_trie(dict_source=cusset)))
     
     userinput.append(input)
 
     output = model.predict((userinput))
-    
+
     pred = "มีโอกาสโดนหลอกมากนะ" if np.any(output[1] >= treshold) else "มีโอกาสโดนหลอกน้อยนะ"
-    
+
+    gc.collect()
+
+    del model
+    del output
+    del input
+    del userinput
+    del cusset
+
     return pred

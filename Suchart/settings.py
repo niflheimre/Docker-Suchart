@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'Suchart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DATABASE_NAME'),
         'USER': os.environ.get('DATABASE_USER'),
         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
@@ -152,6 +152,7 @@ ADMIN_SHORTCUTS = [
     {
         'title': 'Database',
         'shortcuts': [
+            
             {
                 'title':'All Cases',
                 'url_name': 'admin:homepage_case_changelist',
@@ -165,6 +166,19 @@ ADMIN_SHORTCUTS = [
                 'open_new_window': True,
                 'icon':'fas fa-plus'
             },
+            {
+                'title':'All Trainable Data',
+                'url_name': 'admin:homepage_tweet_changelist',
+                'open_new_window': True,
+                'icon':'fas fa-cogs'
+            },
+            {
+                'title': 'Add New Trainable Data',
+                'url_name': 'admin:homepage_tweet_add',
+                'has_perms': 'example.utils.has_perms_to_users',
+                'open_new_window': True,
+                'icon':'fas fa-plus'
+            }
         ]
     }
 ]

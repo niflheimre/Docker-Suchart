@@ -4,6 +4,11 @@ stat_choice = [
     ('0', 'Unverified'),
     ('1', 'Verified')
 ]
+
+stat_train = [
+    ('0', 'Not Trained'),
+    ('1','Trained')
+]
 class case(models.Model):
     status = models.CharField(max_length=1,choices=stat_choice,default='0')
     name = models.CharField(max_length=60)
@@ -20,4 +25,12 @@ class case(models.Model):
 
     def __str__(self):
         return str(self.id)+': '+self.name
+
+class Tweet(models.Model):
+    status = models.CharField(max_length=1, choices=stat_train, default='0')
+    user = models.CharField(max_length=100)
+    post = models.TextField(max_length=500, null=True, blank=True)
+    
+    def __str__(self):
+        return str(self.id)+': '+self.user
     

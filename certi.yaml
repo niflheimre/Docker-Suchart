@@ -1,0 +1,7 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: certi
+spec:
+  domains:
+    - www.suchart.info

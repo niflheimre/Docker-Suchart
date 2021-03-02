@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import loader
-from .models import case
+from .models import case,Tweet
 from rest_framework import status
 from rest_framework.response import Response
 from django.http.response import JsonResponse
@@ -74,7 +74,9 @@ def caseExist(request):
 
 # api/model?text=<str>
 def MLmodel(request):
-    # res = 'Under maintenance'
+    
+    ###### rmem used prox 1.1 GB can't deploy on heroku :( ######
+
     if request.method == 'GET':
         print('request received.')
 
@@ -84,15 +86,19 @@ def MLmodel(request):
 
         return JsonResponse({"result": str(res)}, status=status.HTTP_200_OK)
     
+    ##############################################################
+        
     return JsonResponse({"Error": "Forbidden Request"}, status=status.HTTP_403_FORBIDDEN)
 
 
 def twitterSearch(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            html = '<html><body></br></br></br><h1>This page is under maintenance.</h1><h4 id="countdown">Closing in 5 second."</h4></body><script>var seconds = 5;function countdown() {seconds = seconds - 1;if (seconds < 0) {window.close();} else {document.getElementById("countdown").innerHTML = "Closing in "+ seconds.toString() +" second.";window.setTimeout("countdown()", 1000);} } countdown();</script></html>'
-            return HttpResponse(html)
-            # return render(request, 'homepage/twitter_search.html')    # snscrape not working on AWS server :(
+            
+            # html = '<html><body></br></br></br><h1>This page is under maintenance.</h1><h4 id="countdown">Closing in 5 second."</h4></body><script>var seconds = 5;function countdown() {seconds = seconds - 1;if (seconds < 0) {window.close();} else {document.getElementById("countdown").innerHTML = "Closing in "+ seconds.toString() +" second.";window.setTimeout("countdown()", 1000);} } countdown();</script></html>'
+            # return HttpResponse(html)
+            
+            return render(request, 'homepage/twitter_search.html')    # snscrape not working on AWS server :(
         else:
             return redirect('index')
 
@@ -106,6 +112,7 @@ def twitterSearch(request):
                 "index":""
             }
         template = loader.get_template('homepage/twitter_search.html')
+
         if 'searchBtn' in data :
             for i,tweet in enumerate(sntwitter.TwitterSearchScraper(data['keyword'] + '(from:' + data['username'] + ')' +'since:2015-12-17').get_items()) :
                 if i > int(data['maxtweets']) :
@@ -121,27 +128,40 @@ def twitterSearch(request):
             saved_df = pd.DataFrame(columns=['user_name','text'])
             coluser = data.getlist('coluser')
             coltext = data.getlist('coltext')
+
             for index in range(len(data.getlist('coluser'))) :
                 jstweet = copy.deepcopy(model)
                 jstweet['index'] = index
                 jstweet['user'] = coluser[index]
                 jstweet['text'] = coltext[index]
                 resultlist['result'].append(jstweet)
+
                 if  'colindex' in data :
-                    if str(index) in data.getlist('colindex') :
-                        saved_df = saved_df.append({'user_name': coluser[index], 'text': coltext[index]},ignore_index=True)
+                    if str(index) in data.getlist('colindex'):
+                        Tweet.objects.create(
+                        user=coluser[index],
+                        post=coltext[index]
+                        )
+
+                        # saved_df = saved_df.append({'user_name': coluser[index], 'text': coltext[index]},ignore_index=True)
             print(saved_df)
             
         elif 'saveAll' in data :
             saved_df = pd.DataFrame(columns=['user_name','text'])
             coluser = data.getlist('coluser')
             coltext = data.getlist('coltext')
+
             for index in range(len(data.getlist('coluser'))) :
                 jstweet = copy.deepcopy(model)
                 jstweet['index'] = index
                 jstweet['user'] = coluser[index]
                 jstweet['text'] = coltext[index]
                 resultlist['result'].append(jstweet)
-                saved_df = saved_df.append({'user_name': coluser[index], 'text': coltext[index]},ignore_index=True)
+
+                Tweet.objects.create(
+                    user=coluser[index],
+                    post=coltext[index]
+                    )
+                # saved_df = saved_df.append({'user_name': coluser[index], 'text': coltext[index]},ignore_index=True)
             print(saved_df)
         return HttpResponse(template.render(resultlist, request))
