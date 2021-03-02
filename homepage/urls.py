@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from . import views, webhooks
 from django.conf.urls import include, url
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('twitter_search/', views.twitterSearch, name='twitterSearch'),
     path('api/query', views.caseExist),
     path('api/model', views.MLmodel),
+    path('webhook', webhooks.dialogflow)
 ]
