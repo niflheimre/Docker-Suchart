@@ -59,11 +59,11 @@ def caseExist(request):
         obj = None
 
         if(typ == 'name'):
-            obj = case.objects.filter(name__contains=str(content))
+            obj = case.objects.filter(status='1').filter(name__contains=str(content))
         if(typ == 'bank_num'):
-            obj = case.objects.filter(bank_num=content)
+            obj = case.objects.filter(status='1').filter(bank_num=content)
         if(typ == 'nat_id'):
-            obj = case.objects.filter(nat_id=content)
+            obj = case.objects.filter(status='1').filter(nat_id=content)
         
         if (len(obj)!=0):
             return JsonResponse({"value": True,"count":len(obj)}, status=status.HTTP_200_OK)

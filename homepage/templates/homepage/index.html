@@ -1,37 +1,51 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'homepage/style.css' %}" />
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'homepage/style.css' %}"
+/>
 
 <head>
   <title>Suchart de Bot</title>
   <link rel="shortcut icon" href="{% static 'src/logo150.png' %}" type="image/x-icon" />
-  
+
   <link rel="image_src" href="{% static 'src/duck pattern-01.jpg' %}" />
-  
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400&display=swap" rel="stylesheet">
+  
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous"
+  />
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+  
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 
   <!-- Jquery mask -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.62/jquery.inputmask.bundle.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 </head>
 
 <body style="background-color: #f2f2f2">
@@ -39,8 +53,15 @@
   <!-- nav bar -->
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Suchart</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcoll" aria-controls="navcoll"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navcoll"
+      aria-controls="navcoll"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navcoll">
@@ -77,7 +98,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- second container -->
   <div id="chatbot" class="container-fluid min-vh-100">
     <div class="row min-vh-100">
@@ -109,10 +130,10 @@
           </div>
         </div>
       </div>
-
+      
     </div>
   </div>
-
+  
   <!-- third container -->
   <div id="search">
     <div class="card-lg card-fluid min-vh-100" style="background-color: rgb(34, 82, 112);background-size:cover;">
@@ -121,36 +142,29 @@
           <div class="text-white text-center rgba-stylish-strong py-5 px-4">
             <div class="py-5">
               <h2 class="card-title display-4 my-4 py-2">Check the Trader</h2>
-              <p class="h4 mb-4 pb-2 px-md-7 mx-md-5" style="font-family:'Kanit', sans-serif;font-weight: 100;">
-                ตรวจสอบร้านค้าหรือผู้ขายกับฐานข้อมูลของเรา โดยกรอกรายละเอียดของผู้ขายที่นี่</p>
-
+              <p class="h4 mb-4 pb-2 px-md-7 mx-md-5" style="font-family:'Kanit', sans-serif;font-weight: 100;">ตรวจสอบร้านค้าหรือผู้ขายกับฐานข้อมูลของเรา โดยกรอกรายละเอียดของผู้ขายที่นี่</p>
+              
               <form id="SearchForm">
-                <div
-                  class="form-row py-2 row-cols-1 row-cols-sm-2 row-col-md-3 justify-content-center align-items-center">
+                <div class="form-row py-2 row-cols-1 row-cols-sm-2 row-col-md-3 justify-content-center align-items-center">
                   <div class="form-group col col-md-3 align-self-center my-2">
                     <input type="text" class="form-control bg-transparent text-light" id="inputContent" required>
                   </div>
                   <div class="form-group col col-md-auto align-self-center my-2">
-                    <select class="custom-select bg-dark text-white-50" id="inputType"
-                      style="font-family:'Kanit', sans-serif;" required>
-                      <option disabled selected value="">ประเภทข้อมูล</option>
+                    <select class="custom-select bg-dark text-white-50" id="inputType" style="font-family:'Kanit', sans-serif;" required>
+                      <option selected disabled value="">ประเภทข้อมูล</option>
                       <option value="name">ชื่อ-นามสกุล</option>
                       <option value="bank_num">เลขบัญชี</option>
                       <option value="nat_id">เลขบัตรประชาชน</option>
                     </select>
                   </div>
                   <div class="col col-md-auto">
-                    <button class="btn btn-dark btn-lg" style="padding-top: 5px;padding-bottom: 5px;"
-                      type="submit">Submit</button>
+                      <button class="btn btn-dark btn-lg" style="padding-top: 5px;padding-bottom: 5px;" type="submit">Submit</button>
                   </div>
                 </div>
               </form>
-              <img id="loadresponse" style="display: none;" src="url(../../../../static/src/Rolling-1s-111px.gif" class="loading"><img>
-              <p class="lead" id="ResponseTrue"
-                style="font-family:'Kanit', sans-serif;color: rgb(255, 83, 83);display:none;"></p>
-              <p class="lead" id="ResponseFalse"
-                style="font-family:'Kanit', sans-serif;color: rgb(174, 255, 121);display:none;">ไม่พบในฐานข้อมูล
-                กรุณาใช้งาน Chatbot ของเราเพื่อความมั่นใจ</p>
+              <img id="loadresponse" style="display: none;" src= "url(../../../../static/src/Rolling-1s-111px.gif" class="loading"><img>
+              <p class="lead" id="ResponseTrue" style="font-family:'Kanit', sans-serif;color: rgb(255, 83, 83);display:none;"></p>
+              <p class="lead" id="ResponseFalse" style="font-family:'Kanit', sans-serif;color: rgb(174, 255, 121);display:none;">ไม่พบในฐานข้อมูล กรุณาใช้งาน Chatbot ของเราเพื่อความมั่นใจ</p>
             </div>
           </div>
         </div>
@@ -160,15 +174,13 @@
 
   <!-- forth container -->
   <div id="raise">
-    <div class="card-lg card-fluid"
-      style="background-image: url(../../static/src/31799.png);background-repeat:no-repeat;background-size:cover;">
+    <div class="card-lg card-fluid" style="background-image: url(../../static/src/31799.png);background-repeat:no-repeat;background-size:cover;">
       <div class="row min-vh-100 justify-content-center align-items-center">
         <div class="col-lg-12 my-auto">
           <div class="text-white text-center rgba-stylish-strong py-5 px-4">
             <div class="py-5">
               <h2 class="card-title display-4 my-4 py-2">Help us prevent online fraud</h2>
-              <p class="h4 mb-4 pb-2 px-md-5 mx-md-5" style="font-family: 'Kanit',sans-serif;font-weight: 100;">
-                คุณถูกโกงมาหรือไม่? ส่งข้อมูลให้กับเรา เพื่อช่วยให้คนอื่นๆไม่ถูกโกงแบบคุณอีก</p>
+              <p class="h4 mb-4 pb-2 px-md-5 mx-md-5" style="font-family: 'Kanit',sans-serif;font-weight: 100;">คุณถูกโกงมาหรือไม่? ส่งข้อมูลให้กับเรา เพื่อช่วยให้คนอื่นๆไม่ถูกโกงแบบคุณอีก</p>
               <a href="{% url 'raiseCase'%}" role="button" class="btn btn-outline-light btn-lg">Send report</a>
             </div>
           </div>
@@ -179,11 +191,16 @@
   </div>
   <!-- Load Facebook SDK for JavaScript -->
   <div id="fb-root">
-    <div class="fb-customerchat" attribution="setup_tool" page_id="101459038098009" theme_color="#2e7efF"
-      greeting_dialog_display="hide"></div>
+    <div
+      class="fb-customerchat"
+      attribution="setup_tool"
+      page_id="101459038098009"
+      theme_color="#2e7efF"
+      greeting_dialog_display="hide"
+    ></div>
   </div>
 
-
+  
   <script>
     window.fbAsyncInit = function () {
       FB.init({
@@ -206,6 +223,11 @@
   <!-- <script type="text/javascript" src="url(../../../../static/src/script/js/js"></script> -->
 
   <!-- Your Chat Plugin code -->
-  <div class="fb-customerchat" attribution="setup_tool" page_id="101459038098009" theme_color="#2e7efF"
-    greeting_dialog_display="hide"></div>
+  <div
+    class="fb-customerchat"
+    attribution="setup_tool"
+    page_id="101459038098009"
+    theme_color="#2e7efF"
+    greeting_dialog_display="hide"
+  ></div>
 </body>
