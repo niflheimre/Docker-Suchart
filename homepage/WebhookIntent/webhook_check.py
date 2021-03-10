@@ -1,3 +1,4 @@
+from ..models import case
 from ..MLmaterial.MLmodel import Predict
 
 class checkFunc():
@@ -142,20 +143,36 @@ class checkFunc():
             name = str(reqjson.get('queryResult').get('parameters').get('seller_name'))
             phone = str(reqjson.get('queryResult').get('parameters').get('seller_phone'))
             banknum = str(reqjson.get('queryResult').get('parameters').get('seller_banknum'))
+            
+            obj = None
+
             text = ''
+            resultlist = []
+            resulttext = ''
             if name:
                 text = 'ชื่อ: ' + name + '\n'
+                obj = case.objects.filter(name__contains=str(name))
+                if (len(obj)!=0):
+                    resultlist.append(' ชื่อ')
+                obj = None
             if phone:
                 text = text + 'เบอร์โทร: ' + phone + '\n'
+                obj = case.objects.filter(name__contains=str(phone))
+                if (len(obj)!=0):
+                    resultlist.append(' เบอร์โทร')
+                obj = None
             if banknum:
                 text = text + 'เลขบัญชี: ' + banknum + '\n'
-            resjson['fulfillmentMessages'] = [{'text': {'text': [text]}},
+                obj = case.objects.filter(name__contains=str(banknum))
+                if (len(obj)!=0):
+                    resultlist.append(' เลขบัญชี')
+                obj = None
+            if resultlist:
+                resulttext = 'พบข้อมูล ' + ",".join(resultlist) +' ของผู้มีประวัติโกงที่ตรงกัน'
+
+            resjson['fulfillmentMessages'] = [{'text': {'text': [resulttext]}},
             {'text': {'text': [text]},'platform': "FACEBOOK"},
-            {
-            'text': {
-                'text': ['ไม่โกง']
-            },'platform': "FACEBOOK"
-            }]
+            {'text': {'text': [resulttext]},'platform': "FACEBOOK"},]
             resjson['outputContexts'] = [{
                 "name": sessionID + '/contexts/check_inform',
                 "lifespanCount": 0,
