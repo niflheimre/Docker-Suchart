@@ -45,7 +45,7 @@ def dialogflow(req):
             resjson = checkFunc.check_inform(reqjson, reqjson.get('session'))
         elif intentName == "check-inform-name":
             resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))
-        elif intentName == "check-inform-phone":
+        elif intentName == "check-inform-id":
             resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))
         elif intentName == "check-inform-banknum":
             resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))

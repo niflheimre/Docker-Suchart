@@ -67,9 +67,9 @@ class checkFunc():
                 {'text': {'text': ["ต้องการค้นหาจากข้อมูลอะไรครับ"]},'platform': "FACEBOOK"},
                 {
                     'quickReplies': {
-                    'title': "ผมสามารถตรวจสอบได้จาก ชื่อ ,เบอร์โทรศัพท์ และ เลขบัญชีธนาคาร",
+                    'title': "ผมสามารถตรวจสอบได้จาก ชื่อ ,เลขประจำตัวประชาชน และ เลขบัญชีธนาคาร",
                     'quickReplies': [
-                        "ชื่อ","เบอร์โทรศัพท์","เลขบัญชีธนาคาร"
+                        "ชื่อ","เลขประจำตัวประชาชน","เลขบัญชีธนาคาร"
                     ]
                     },
                     'platform': "FACEBOOK"
@@ -112,9 +112,9 @@ class checkFunc():
                 "parameters": reqjson.get('queryResult').get('parameters')
             }]
 
-        elif reqjson.get('queryResult').get('parameters').get('use_phonenum'):
-            resjson['fulfillmentMessages'] = [{'text': {'text': ["ขอทราบเบอร์โทรศัพท์ของคนขายด้วยครับ"]}}]
-            resjson['fulfillmentText'] = "ขอทราบเบอร์โทรศัพท์ของคนขายด้วยครับ"
+        elif reqjson.get('queryResult').get('parameters').get('use_id'):
+            resjson['fulfillmentMessages'] = [{'text': {'text': ["ขอทราบเลขประจำตัวประชาชนของคนขายด้วยครับ"]}}]
+            resjson['fulfillmentText'] = "ขอทราบเลขประจำตัวประชาชนของคนขายด้วยครับ"
             resjson['outputContexts'] = [{
                 "name": sessionID + '/contexts/check_inform_phone',
                 "lifespanCount": 2,
@@ -141,7 +141,7 @@ class checkFunc():
         else:
             ########################################### !!! mock up !!!
             name = str(reqjson.get('queryResult').get('parameters').get('seller_name'))
-            phone = str(reqjson.get('queryResult').get('parameters').get('seller_phone'))
+            id = str(reqjson.get('queryResult').get('parameters').get('seller_id'))
             banknum = str(reqjson.get('queryResult').get('parameters').get('seller_banknum'))
             
             obj = None
@@ -153,22 +153,28 @@ class checkFunc():
                 text = 'ชื่อ: ' + name + '\n'
                 obj = case.objects.filter(name__contains=str(name))
                 if (len(obj)!=0):
-                    resultlist.append(' ชื่อ')
+                    if (len(obj)<2):
+                        resultlist.append('ชื่อ: ' + str(obj[0])[2:] + '\nและ')
+                    else :
+                        resultlist.append('ชื่อ: ' + str(obj[0])[2:] + ' ,\n'
+                        + str(obj[1])[2:] + '\n...\nและ')
                 obj = None
-            if phone:
-                text = text + 'เบอร์โทร: ' + phone + '\n'
-                obj = case.objects.filter(name__contains=str(phone))
+            if id:
+                text = text + 'เลขประจำตัวประชาชน: ' + id + '\n'
+                obj = case.objects.filter(nat_id=str(id))
                 if (len(obj)!=0):
-                    resultlist.append(' เบอร์โทร')
+                    resultlist.append('เลขประจำตัวประชาชน\n')
                 obj = None
             if banknum:
                 text = text + 'เลขบัญชี: ' + banknum + '\n'
-                obj = case.objects.filter(name__contains=str(banknum))
+                obj = case.objects.filter(bank_num=str(banknum))
                 if (len(obj)!=0):
-                    resultlist.append(' เลขบัญชี')
+                    resultlist.append('เลขบัญชี\n')
                 obj = None
             if resultlist:
-                resulttext = 'พบข้อมูล ' + ",".join(resultlist) +' ของผู้มีประวัติโกงที่ตรงกัน'
+                resulttext = 'พบข้อมูล\n' + "".join(resultlist) +'ของผู้มีประวัติโกงที่ตรงกัน'
+            else :
+                resulttext = 'ไม่พบข้อมูลของผู้มีประวัติโกงที่ตรงกัน'
 
             resjson['fulfillmentMessages'] = [{'text': {'text': [resulttext]}},
             {'text': {'text': [text]},'platform': "FACEBOOK"},
@@ -188,7 +194,7 @@ class checkFunc():
                 'quickReplies': {
                 'title': "ต้องการแก้ไขหรือเพิ่มข้อมูลอะไรอีกไหม",
                 'quickReplies': [
-                    "ชื่อ","เบอร์โทรศัพท์","เลขบัญชีธนาคาร","ไม่ต้องการ"
+                    "ชื่อ","เลขประจำตัวประชาชน","เลขบัญชีธนาคาร","ไม่ต้องการ"
                 ]
                 },
                 'platform': "FACEBOOK"
