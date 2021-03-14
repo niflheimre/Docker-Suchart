@@ -1,7 +1,5 @@
 from django.http.response import JsonResponse
 import json
-import requests
-import os
 from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 

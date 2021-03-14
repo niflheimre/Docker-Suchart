@@ -6,12 +6,11 @@ from transformers import BertForSequenceClassification
 import torch
 import numpy as np
 import gc
+from django.conf import settings 
 
-def Predict(text,treshold):
-    
+def LoadModel():
+
     gc.collect()
-
-    userinput = []
 
     model_args = {
         'no_cache': True,
@@ -20,7 +19,7 @@ def Predict(text,treshold):
 
     try:
 
-        model = ClassificationModel(
+        settings.my_ml_model_variable = ClassificationModel(
             "bert", './homepage/MLmaterial/weightedModel', use_cuda=False,args=model_args
         )
         # model = BertForSequenceClassification.from_pretrained('./homepage/MLmaterial/weightedModel')
@@ -35,22 +34,25 @@ def Predict(text,treshold):
     with open('./homepage/MLmaterial/testread.txt', 'r', encoding='utf8') as f:
         for a in f.read().splitlines():
             cusset.add(a)
+    settings.cusset = cusset
+    del cusset
 
 
-    input = ' '.join(word_tokenize(text, engine='newmm', custom_dict=dict_trie(dict_source=cusset)))
+def Predict(text,treshold):
+    userinput = []
+    
+    input = ' '.join(word_tokenize(text, engine='newmm', custom_dict=dict_trie(dict_source=settings.cusset)))
     
     userinput.append(input)
 
-    output = model.predict((userinput))
+    output = settings.my_ml_model_variable.predict((userinput))
 
     pred = "มีโอกาสโดนหลอกมากนะ" if np.any(output[1] >= treshold) else "มีโอกาสโดนหลอกน้อยนะ"
 
     gc.collect()
-
-    del model
+    
     del output
     del input
     del userinput
-    del cusset
 
     return pred

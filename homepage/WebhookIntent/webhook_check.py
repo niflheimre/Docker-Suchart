@@ -1,5 +1,24 @@
 from ..models import case
 from ..MLmaterial.MLmodel import Predict
+from .tweetscrape import TweetIdScraper
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
+from threading import Thread
+import time
+
+class predictThread(Thread):
+
+        def __init__(self, post):
+            self.sText = 'time out'
+            self.sPost = post
+            self.super = super(predictThread, self).__init__(daemon=True)
+
+        def run(self):
+            print('predictThread start!')
+            self.sText = Predict(self.sPost,26)
+            print('predictThread finish!')
+            return
 
 class checkFunc():
     def check(reqjson, sessionID):
@@ -88,13 +107,38 @@ class checkFunc():
         return resjson
 
     def check_post(reqjson, sessionID):
-        ########################################### !!! mock up !!!
         resjson = {}
-        post = reqjson.get('queryResult').get('parameters').get('post')
+        post = str(reqjson.get('queryResult').get('parameters').get('post'))
         text = "time out"
-        text = Predict(post,26)
+        resjson['fulfillmentMessages'] = []
+        
+        validate = URLValidator()
+        try:
+            validate(post)
+            urlsplit = post.replace('?', '/').split('/')
+            try:
+                tweetid = (urlsplit[urlsplit.index('status')+1] if urlsplit[urlsplit.index('status')+1].strip('0123456789') == '' else '')
+                soup = TweetIdScraper(tweetID=tweetid).get_item()
+            except:
+                soup = None
+            try:
+                post = str(soup.find("meta", {"property": "og:description"})["content"])[1:-1]
+                resjson['fulfillmentMessages'] = [{'text': {'text': [post]}}]
+                
+            except:
+                text = 'invalid tweet url'
+            p = predictThread(post)
+            p.start()
+            time.sleep(3)
+            text = p.sText
+        except ValidationError as e:
+            p = predictThread(post)
+            p.start()
+            time.sleep(3)
+            text = p.sText
         resjson['fulfillmentText'] = text
-        resjson['fulfillmentMessages'] = [{'text': {'text': [text]}}]
+        resjson['fulfillmentMessages'].append({'text': {'text': [text]}})
+
         return resjson
 
     def check_inform(reqjson, sessionID):
@@ -139,7 +183,6 @@ class checkFunc():
             }]
 
         else:
-            ########################################### !!! mock up !!!
             name = str(reqjson.get('queryResult').get('parameters').get('seller_name'))
             id = str(reqjson.get('queryResult').get('parameters').get('seller_id'))
             banknum = str(reqjson.get('queryResult').get('parameters').get('seller_banknum'))
@@ -157,7 +200,7 @@ class checkFunc():
                         resultlist.append('ชื่อ: ' + str(obj[0])[2:] + '\nและ')
                     else :
                         resultlist.append('ชื่อ: ' + str(obj[0])[2:] + ' ,\n'
-                        + str(obj[1])[2:] + '\n...\nและ')
+                        + str(obj[1])[2:] + '\n...\n')
                 obj = None
             if id:
                 text = text + 'เลขประจำตัวประชาชน: ' + id + '\n'
