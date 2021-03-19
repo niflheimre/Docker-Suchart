@@ -45,7 +45,7 @@ class caseAdmin(admin.ModelAdmin):
     isVerified.short_description = 'Verified'
     isVerified.admin_order_field = 'status'
 
-    list_display = ['isVerified','id','name','goods','price','nat_id','bank_num']
+    list_display = ['isVerified','id','name','goods','price','nat_id','bank_num','report_date']
     list_display_links = ('name',)
 
     search_fields = ("name", "goods", "bank_num", "nat_id","website")

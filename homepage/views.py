@@ -59,14 +59,15 @@ def caseExist(request):
         obj = None
 
         if(typ == 'name'):
-            obj = case.objects.filter(status='1').filter(name__contains=str(content))
+            obj = case.objects.filter(status='1').filter(name__contains=str(content)).values()
         if(typ == 'bank_num'):
-            obj = case.objects.filter(status='1').filter(bank_num=content)
+            obj = case.objects.filter(status='1').filter(bank_num=content).values()
         if(typ == 'nat_id'):
-            obj = case.objects.filter(status='1').filter(nat_id=content)
+            obj = case.objects.filter(status='1').filter(nat_id=content).values()
         
-        if (len(obj)!=0):
-            return JsonResponse({"value": True,"count":len(obj)}, status=status.HTTP_200_OK)
+        if (len(obj) != 0):
+            a = obj.order_by('-report_date')[0]
+            return JsonResponse({"value": True,"count":len(obj),"last": a['report_date'].strftime("%B %d, %Y")}, status=status.HTTP_200_OK)
         else:
             return JsonResponse({"value": False}, status=status.HTTP_200_OK)
     

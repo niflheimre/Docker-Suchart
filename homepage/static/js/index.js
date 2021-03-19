@@ -44,7 +44,7 @@ $(function () {
           $("#ResponseTrue").text(
             "พบในฐานข้อมูล ผู้ขายมีประวัติการโกงทั้งหมด " +
               data.count +
-              " รายการ"
+              " รายการ ประวัติล่าสุด "+data.last
           );
         } else {
           $("#ResponseTrue").css({ display: "none" });
