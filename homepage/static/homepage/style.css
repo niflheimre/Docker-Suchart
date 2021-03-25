@@ -50,12 +50,37 @@ html {
     background-color: #fed049;
 }
 
+.yellow .btn-outline-light{
+  color: #fed049 !important;
+  border-color: #fed049 !important;
+}
+
+.yellow .btn-outline-light:hover {
+    color: rgb(117, 117, 117) !important;
+    background-color: #fed049;
+}
+
 .trans{
-  background-color: rgba(0, 0, 0, 0)!important;
-  color: whitesmoke!important;
+  color:#d8ebe4!important;
+}
+
+.trans .bg-transperent {
+  color:#d8ebe4!important;
+  border-color: #d8ebe4!important;
+  background-color: transparent!important;
+}
+
+.trans .btn-outline-light{
+  color:#d8ebe4!important;
+  border-color: #d8ebe4 !important;
+}
+
+.trans .btn-outline-light:hover{
+  color: rgb(117, 117, 117) !important;
+  background-color:#d8ebe4!important;
 }
 
 .trans option {
-    color: whitesmoke;
+    color:#d8ebe4;
     background: #282846;
 }
