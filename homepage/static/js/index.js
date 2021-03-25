@@ -1,4 +1,18 @@
 $(function () {
+
+  
+  $(window).on("scroll", function () {
+    if ($(window).scrollTop() < 100) {
+      $(".navbar").addClass("bg-transperent");
+      $(".navbar").removeClass("bg-dark");
+      $(".navbar").addClass("grad");
+    } else {
+      $(".navbar").removeClass("bg-transperent");
+      $(".navbar").addClass("bg-dark");
+      $(".navbar").removeClass("grad");
+    }
+  });
+
   $("#inputType").change(function () {
     
     var SelectedValue = $(this).val();

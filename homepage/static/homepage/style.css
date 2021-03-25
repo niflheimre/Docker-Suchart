@@ -10,4 +10,52 @@ html {
 .loading {
     height: 30px;
     width: 30px;
+    display: none;
+}
+
+.custom-select { 
+  background-image:rgba(255, 255, 255, 0.500) url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3E%3Cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3E%3C/svg%3E");
+}
+
+.grad{
+  background-color: rgb(0,0,0,0.1);
+}
+
+.navbar {
+  transition: all 1s;
+  font-size: 1.25rem;
+}
+
+.navbar .navbar-brand{
+  font-size: 1.75rem;
+  margin-right: 1.5rem;
+}
+
+.navbar-toggler{
+  font-size: 1.25rem;
+}
+
+.yellow{
+  color: #fed049 !important;
+  border-color: #fed049 !important;
+}
+
+.yellow .btn-outline-light{
+  color: #fed049 !important;
+  border-color: #fed049 !important;
+}
+
+.yellow .btn-outline-light:hover {
+    color: rgb(117, 117, 117) !important;
+    background-color: #fed049;
+}
+
+.trans{
+  background-color: rgba(0, 0, 0, 0)!important;
+  color: whitesmoke!important;
+}
+
+.trans option {
+    color: whitesmoke;
+    background: #282846;
 }

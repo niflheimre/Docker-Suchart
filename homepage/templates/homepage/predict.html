@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'homepage/style.css' %}" />
+
+<style>
+    
+    .loading {
+    height: 30px;
+    width: 30px;
+    display: none;
+    }
+
+    .grad{
+    background-color: rgb(0,0,0,0.1);
+    }
+
+    .navbar {
+    transition: all 1s;
+    font-size: 1.25rem;
+    }
+
+    .navbar .navbar-brand{
+    font-size: 1.75rem;
+    margin-right: 1.5rem;
+    }
+
+    .navbar-toggler{
+    font-size: 1.25rem;
+    }
+
+    .bg-transparent{
+        border-color: #fed049 !important;
+    }
+
+    .btn-outline-light {
+        color: #fed049 !important;
+        border-color: #fed049 !important;
+    }
+
+    .btn-outline-light:hover {
+        color: whitesmoke !important;
+        background-color: #fed049 !important;
+    }
+
+    .text {
+        color: #fed049 !important;
+        font-family: 'Kanit', sans-serif;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="{% static 'src/logo150.png' %}" type="image/x-icon" />
+    <title>Predict</title>
+
+    <link rel="image_src" href="{% static 'src/pred-bg-3.png' %}" />
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    
+    <!-- Jquery mask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.62/jquery.inputmask.bundle.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color: #f2f2f2">
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-transperent grad">
+        <a class="navbar-brand" href="/">Suchart</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navcoll"
+            aria-controls="navcoll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
+    <div id="search">
+        <div class="card-lg card-fluid vh-100" style="background-image:linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),url(../../static/src/pred-bg.png);
+              background-size:cover;">
+            <div class="row min-vh-100 justify-content-center align-items-center m-0">
+                <div class="col-lg-12 my-auto">
+                    <div class="text-center rgba-stylish-strong py-5 px-4">
+                        <div class="py-5">
+                            <h2 class="card-title display-3 my-4 py-2 text">Predict The Post</h2>
+                            <p class="h4 mb-4 pb-2 px-md-7 mx-md-5 text"
+                                style="font-weight: 250;">
+                                ตรวจสอบข้อความโพสกับ machine learning model ของเรา</p>
+    
+                            <form id="SearchForm">
+                                <div
+                                    class="form-row py-2 row-cols-1 justify-content-center align-items-center">
+                                    <div class="form-group col col-md-6 align-self-center my-2">
+                                        <input type="text" class="form-control bg-transparent text-light" id="inputContent"
+                                            required>
+                                    </div>
+                                    <div class="col col-md-auto">
+                                        <button class="btn btn-outline-light btn-lg"
+                                            style="padding-top: 5px;padding-bottom: 5px;" type="submit">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <img id="loadresponse" style="display: none;"
+                                src="url(../../../../static/src/Rolling-1s-111px.gif" class="loading mt-4"><img>
+                            <p class="lead text" id="Response"
+                                style="display:none;"></p>
+
+                            <script>
+
+                                $("#SearchForm").submit(function (event) {
+                                        // Stop form from submitting normally
+                                        $("#loadresponse").css({ display: "inline" });
+                                        $("#Response").css({ display: "none" });
+
+                                        event.preventDefault();
+
+                                        var requrl =
+                                            "/api/model?text=" +
+                                            $("#inputContent").val();
+
+                                        var req = $.get(requrl)
+                                            .done(function (data) {
+                                                $("#loadresponse").css({ display: "none" });
+                                                $("#Response").text(data.result);
+                                                $("#Response").css({ display: "contents" });
+                                            })
+                                            .fail(function (data) {
+                                                console.err("Response error: " + data);
+                                                // 4xx or 5xx response, alert user about failure
+                                            });
+                                    });
+
+                            </script>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+</html>
+

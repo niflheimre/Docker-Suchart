@@ -48,6 +48,11 @@ def raiseCase(request):
         )
         return render(request, 'homepage/case_added.html')
 
+def modelSite(request):
+
+    if request.method == 'GET':
+        return render(request, 'homepage/predict.html')
+
 # api/query?type=<str>&content=<str>
 def caseExist(request):
 
