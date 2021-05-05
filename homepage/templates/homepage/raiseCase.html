@@ -55,6 +55,22 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <div class="collapse navbar-collapse" id="navcoll">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/#chatbot">Meet with our chatbot</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#search">Information Checking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#raise">Send report</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          <a class="nav-link" href="/admin">sign in</a>
+        </span>
+      </div>
     </nav>
 
     <div id="loader" style="background-image: url(../../static/src/Eclipse-1s-300px.gif);background-position: center;background-size: 100%;background-repeat: no-repeat;display: none;">
@@ -163,7 +179,7 @@
             <div class="form-group col-md">
               <label for="b_name">Bank name</label>
               <select type="text"class="form-control" id="b_name" name="b_name" onchange="bank_opt(value);">
-                <option selected disabled value=" ">select bank</option>
+                <option selected disabled value="">select bank</option>
                 <option value="ธนาคารกรุงเทพ">ธนาคารกรุงเทพ</option>
                 <option value="ธนาคารกรุงไทย">ธนาคารกรุงไทย</option>
                 <option value="ธนาคารกรุงศรี">ธนาคารกรุงศรี</option>

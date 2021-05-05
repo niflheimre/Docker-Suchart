@@ -12,6 +12,7 @@ def dialogflow(req):
     resjson = {}
     if req.method == 'POST':
 
+        host = req.get_host()
         # Decode UTF-8 bytes to Unicode, and convert single quotes 
         # to double quotes to make it valid JSON
         reqjson = req.body.decode('utf8').replace("'", '"')
@@ -30,23 +31,23 @@ def dialogflow(req):
         '''
         intentName = reqjson.get('queryResult').get('intent').get('displayName')
         if intentName == "help":
-            resjson = helpFunc.help(reqjson, reqjson.get('session'))
+            resjson = helpFunc.help(reqjson, reqjson.get('session'),host)
         elif intentName == "complain":
-            resjson = complainFunc.complain(reqjson, reqjson.get('session'))
+            resjson = complainFunc.complain(reqjson, reqjson.get('session'),host)
         elif intentName == "check":
-            resjson = checkFunc.check(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check(reqjson, reqjson.get('session'),host)
         elif intentName == "check-choice":
-            resjson = checkFunc.check_choice(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_choice(reqjson, reqjson.get('session'),host)
         elif intentName == "check-post":
-            resjson = checkFunc.check_post(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_post(reqjson, reqjson.get('session'),host)
         elif intentName == "check-inform":
-            resjson = checkFunc.check_inform(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_inform(reqjson, reqjson.get('session'),host)
         elif intentName == "check-inform-name":
-            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'),host)
         elif intentName == "check-inform-id":
-            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'),host)
         elif intentName == "check-inform-banknum":
-            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'))
+            resjson = checkFunc.check_inform_more(reqjson, reqjson.get('session'),host)
             
         #resjson['fulfillmentMessages'] = [{'text': {'text': ["heloo"]}}]
         return JsonResponse(resjson, status=status.HTTP_200_OK)

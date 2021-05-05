@@ -91,6 +91,22 @@
             aria-controls="navcoll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navcoll">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/#chatbot">Meet with our chatbot</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#search">Information Checking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#raise">Send report</a>
+                </li>
+            </ul>
+            <span class="navbar-text">
+                <a class="nav-link" href="/admin">sign in</a>
+            </span>
+        </div>
     </nav>
 
     <div id="search">
@@ -105,22 +121,22 @@
                                 style="font-weight: 250;">
                                 ตรวจสอบข้อความโพสกับ machine learning model ของเรา</p>
     
-                            <form id="SearchForm">
-                                <div
-                                    class="form-row py-2 row-cols-1 justify-content-center align-items-center">
-                                    <div class="form-group col col-md-6 align-self-center my-2">
-                                        <input type="text" class="form-control bg-transparent text-light" id="inputContent"
-                                            required>
+                            <form id="SearchForm" class="mb-4">
+                                <!-- <div
+                                    class="form-row py-2 row-cols-1 justify-content-center align-items-center"> -->
+                                    <div class="form-group col-auto align-self-center mt-4 pt-2">
+                                        <textarea class="form-control bg-transparent text-light" id="inputContent"
+                                            required></textarea>
                                     </div>
-                                    <div class="col col-md-auto">
+                                    <div class="col-auto">
                                         <button class="btn btn-outline-light btn-lg"
                                             style="padding-top: 5px;padding-bottom: 5px;" type="submit">Submit</button>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </form>
                             <img id="loadresponse" style="display: none;"
                                 src="url(../../../../static/src/Rolling-1s-111px.gif" class="loading mt-4"><img>
-                            <p class="lead text" id="Response"
+                            <p class="lead text mt-4 my-2" id="Response"
                                 style="display:none;"></p>
 
                             <script>
@@ -131,6 +147,8 @@
                                         $("#Response").css({ display: "none" });
 
                                         event.preventDefault();
+
+                                        console.log($("#inputContent").val());
 
                                         var requrl =
                                             "/api/model?text=" +
@@ -147,6 +165,23 @@
                                                 // 4xx or 5xx response, alert user about failure
                                             });
                                     });
+
+                                jQuery.fn.extend({
+                                        autoHeight: function () {
+                                            function autoHeight_(element) {
+                                                return jQuery(element).css({
+                                                    'height': 'auto',
+                                                    'overflow-y': 'hidden'
+                                                }).height(element.scrollHeight);
+                                            }
+                                            return this.each(function () {
+                                                autoHeight_(this).on('input', function () {
+                                                    autoHeight_(this);
+                                                });
+                                            });
+                                        }
+                                    });
+                                    $('#inputContent').autoHeight();
 
                             </script>
 

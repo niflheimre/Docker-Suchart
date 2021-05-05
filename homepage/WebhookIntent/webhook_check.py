@@ -3,7 +3,6 @@ from ..MLmaterial.MLmodel import Predict
 from .tweetscrape import TweetIdScraper
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-
 from threading import Thread
 import time
 
@@ -21,7 +20,7 @@ class predictThread(Thread):
             return
 
 class checkFunc():
-    def check(reqjson, sessionID):
+    def check(reqjson, sessionID,host):
         resjson = {}
         resjson['fulfillmentMessages'] = [{'text': {'text': ["สามารถตรวจสอบได้จาก การกรอกแบบฟอร์ม ข้อมูลส่วนตัวผู้ขาย ข้อความจากโพสต์ผู้ขาย"]}},
         {'text': {'text': ["สามารถตรวจสอบได้จาก"]},'platform': "FACEBOOK"},
@@ -44,24 +43,25 @@ class checkFunc():
         
         return resjson
 
-    def check_choice(reqjson, sessionID):
+    def check_choice(reqjson, sessionID,host):
         resjson = {}
+        print(host)
         if reqjson.get('queryResult').get('parameters').get('use_form'):
-            resjson['fulfillmentMessages'] = [{'text': {'text': ["https://web.suchart.info/#search"]}},
+            resjson['fulfillmentMessages'] = [{'text': {'text': ["https://"+host+"/#search"]}},
             {
                 'card': {
                     'title': "แบบฟอร์มตรวจสอบร้านค้าออนไลน์",
-                    'imageUri': "https://suchart-webhook.herokuapp.com/img/Checkpage.jpg",
+                    'imageUri': "https://"+host,
                     'buttons': [
                         {
                         "text": "ไปที่แบบฟอร์ม",
-                        "postback": "https://web.suchart.info/#search"
+                        "postback": "https://"+host+"/#search"
                         }
                     ]
                 },
                 'platform': "FACEBOOK"
             }]
-            resjson['fulfillmentText'] = "https://web.suchart.info/#search"
+            resjson['fulfillmentText'] = "https://"+host+"/#search"
             resjson['outputContexts'] = [{
                 "name": sessionID + '/contexts/check',
                 "lifespanCount": 0,
@@ -106,7 +106,7 @@ class checkFunc():
 
         return resjson
 
-    def check_post(reqjson, sessionID):
+    def check_post(reqjson, sessionID,host):
         resjson = {}
         post = str(reqjson.get('queryResult').get('parameters').get('post'))
         text = "time out"
@@ -141,7 +141,7 @@ class checkFunc():
 
         return resjson
 
-    def check_inform(reqjson, sessionID):
+    def check_inform(reqjson, sessionID,host):
         resjson = {}
         if reqjson.get('queryResult').get('parameters').get('use_name'):
             resjson['fulfillmentMessages'] = [{'text': {'text': ["บอกชื่อของคนขายมาได้เลย"]}}]
@@ -230,7 +230,7 @@ class checkFunc():
         
         return resjson
 
-    def check_inform_more(reqjson, sessionID):
+    def check_inform_more(reqjson, sessionID,host):
         resjson = {}
         resjson['fulfillmentMessages'] = [{'text': {'text': ["ต้องการแก้ไขหรือเพิ่มข้อมูลอะไรอีกไหม"]}},
             {

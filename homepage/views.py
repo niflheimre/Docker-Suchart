@@ -35,16 +35,16 @@ def raiseCase(request):
             date = None
 
         case.objects.create(
-            bank_name = data['b_name'],
-            bank_num = data['b_acc'],
-            details = data['detail'],
+            bank_name = data['b_name'] if 'b_name' in data else None,
+            bank_num = data['b_acc'] if 'b_acc' in data else None,
+            details = data['detail'] if 'detail' in data else None,
             goods = data['goods'],
-            nat_id = data['nat_id'],
+            nat_id = data['nat_id'] if 'nat_id' in data else None,
             name = data['name'],
             price = data['price'],
-            province = data['province'],
+            province = data['province'] if 'province' in data else None,
             trans_date = date,
-            website=data['website']
+            website=data['website'] if 'website' in data else None
         )
         return render(request, 'homepage/case_added.html')
 

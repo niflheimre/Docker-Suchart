@@ -46,8 +46,10 @@ def Predict(text,treshold):
     userinput.append(input)
 
     output = settings.my_ml_model_variable.predict((userinput))
+     
+    per = format((output[1].max()/42.6)*100, '.2f') if (output[1].max()/42.6)*100 < 95.00 else 95.00
 
-    pred = "มีโอกาสโดนหลอกมากนะ" if np.any(output[1] >= treshold) else "มีโอกาสโดนหลอกน้อยนะ"
+    pred = "มีโอกาสโดนหลอกมากนะ (ลักษณะการเขียนใกล้เคียงกับคนโกง "+str(per)+"%)" if np.any(output[1] >= treshold) else "มีโอกาสโดนหลอกน้อยนะ (ลักษณะการเขียนใกล้เคียงกับคนโกง "+str(per)+"%)"
 
     gc.collect()
     

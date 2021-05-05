@@ -1,22 +1,22 @@
 
 
 class complainFunc():
-    def complain(reqjson, sessionID):
+    def complain(reqjson, sessionID,host):
         resjson = {}
-        resjson['fulfillmentMessages'] = [{'text': {'text': ["https://web.suchart.info/new_case/"]}},
+        resjson['fulfillmentMessages'] = [{'text': {'text': ["https://"+host+"/new_case"]}},
         {
             'card': {
                 'title': "แบบฟอร์มร้องเรียนร้านค้าออนไลน์",
-                'imageUri': "https://suchart-webhook.herokuapp.com/img/Newcasepage.jpg",
+                'imageUri': "https://"+host,
                 'buttons': [
                     {
                         "text": "ไปที่แบบฟอร์ม",
-                        "postback": "https://web.suchart.info/new_case/"
+                        "postback": "https://"+host+"/new_case"
                     }
                     ]
             },
             'platform': "FACEBOOK"
         }]
-        resjson['fulfillmentText'] = "https://web.suchart.info/new_case/"
+        resjson['fulfillmentText'] = "https://"+host+"/new_case/"
             
         return resjson
